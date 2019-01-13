@@ -1,0 +1,54 @@
+logging:
+  level:
+    cristina.tech: debug
+my:
+  monitors:
+    - url: https://blox.weareblox.com/api/markets
+      method: GET
+      jsonPath: amount
+      statusCode: 200
+      alertText:
+        "{
+          \"text\": \"Prod alert: There is no markets pricing data: https://blox.weareblox.com/api/markets\",
+          \"icon_emoji\": \":fire:\",
+          \"attachments\": [
+          {
+            \"text\": \"Fix?\",
+            \"color\": \"danger\",
+            \"attachment_type\": \"alert\",
+            \"actions\": [
+            {
+              \"name\": \"fix\",
+              \"text\": \"Redeploy Dataflow Runner\",
+              \"type\": \"button\"
+            }
+            ]
+          }
+          ]
+        }"
+#    - url: http://staging.blox-engine.trifork-test.blox/market/markets
+#      method: GET
+#      jsonPath: quantity
+#      statusCode: 200
+#      alertText:
+#        "{
+#          \"text\": \"Staging alert: There is no markets pricing data: http://staging.blox-engine.trifork-test.blox/market/markets\",
+#          \"icon_emoji\": \":fire:\",
+#          \"attachments\": [
+#          {
+#            \"text\": \"Fix?\",
+#            \"color\": \"danger\",
+#            \"attachment_type\": \"alert\",
+#            \"actions\": [
+#            {
+#              \"name\": \"fix\",
+#              \"text\": \"Redeploy Dataflow Runner\",
+#              \"type\": \"button\"
+#            }
+#            ]
+#          }
+#          ]
+#        }"
+  channels:
+    - url: ${WEB_HOOK_URL}
+      authToken: ${AUTH_TOKEN}
