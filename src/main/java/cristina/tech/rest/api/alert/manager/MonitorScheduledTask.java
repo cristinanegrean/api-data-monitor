@@ -27,6 +27,7 @@ public class MonitorScheduledTask {
 
     @Scheduled(cron = "0/60 * * * * ?")
     public void monitor() {
+        log.info("Alerting config: " + monitoringConfig.getChannels());
         monitoringConfig.getMonitors().forEach(monitor -> {
             if (monitor.isValid() && !isHealthy(monitor))  {
                 log.warn("Found unhealthy API: " + monitor);

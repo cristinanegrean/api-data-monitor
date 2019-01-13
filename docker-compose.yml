@@ -1,0 +1,11 @@
+version: '3'
+services:
+  api-monitor-service:
+    container_name: api-data-monitor
+    build: build/docker
+    image: cristinatech/api-data-monitor
+    env_file:
+      - /Users/cristinanegrean/api_data_monitor.env
+    environment:
+      - JAVA_OPTS=-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005
+      - SPRING_PROFILES_ACTIVE=default
