@@ -28,8 +28,39 @@ Demonstrated concepts:
 * Check if a monitored configurable JsonNode is present and has data (aka monitored API is healthy)
 * If monitor API becomes unhealthy, post a message to a Slack channel using Spring's RestTemplate
 
+
 Usage:
-* Build docker image, upload to DockerHub
+
+1) Clone and build code and Docker image: 
+
+```bash
+$ git clone https://github.com/cristinanegrean/api-data-monitor.git
+$ cd api-data-monitor
+$ ./gradlew clean build docker
+```
+
+2) Create a `.env` externalized config file to store your alert channel web hook URL and authorization bearer token
+
+```bash
+$ cat /Users/cristinanegrean/api_data_monitor.env 
+WEB_HOOK_URL=https://hooks.slack.com/services/T00000000/B00000000/XXXXXXXXXXXXXXXXXXXXXXXX
+AUTH_TOKEN="put here your htoken"
+```
+
+3) Change env_file path in `docker-compose.yml` to point to location of file you created at step 2)
+
+```    
+env_file:
+  - /Users/cristinanegrean/api_data_monitor.env
+```
+
+4) Start-up application
+
+```bash
+$ docker-compose up
+```
+
+Deploy on Kubernetes:
 * Mount the ConfigMaps as the volume inside the Spring Boot application Docker container
 * Build Helm chart and load Spring Boot application.yaml via Kubernetes ConfigMaps
-* Install Helm chart in service Kubernetes cluster
+* Install Helm chart in Kubernetes cluster
